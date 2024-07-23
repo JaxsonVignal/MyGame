@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 //checks that the object in   unity  that the script is connected to has a ridged body 
@@ -103,6 +104,24 @@ public class script : MonoBehaviour
         //tells the animation editor to flip the animations 
         anim.SetFloat("hInput", Mathf.Abs(hInput));
         anim.SetBool("isGrounded", isGrounded);
+
+        if (isGrounded && Input.GetButtonDown("Fire1"))
+        {
+            anim.SetTrigger("isAttacking");
+            
+        }
+
+        if (!isGrounded && Input.GetButtonDown("Fire1"))
+        {
+            anim.SetTrigger("isAirAttacking");
+
+        }
+
+
+        //else{isAttacking = false; anim.SetBool("isAttacking", isAttacking);}
+
+
+
     }
 
 
