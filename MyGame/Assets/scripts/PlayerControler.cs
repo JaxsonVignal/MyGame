@@ -8,10 +8,17 @@ public class script : MonoBehaviour
 {
     public float speed;
     Rigidbody2D rb;
+    public Transform groundCheck;
     // Start is called before the first frame update
     void Start()
     {
        rb = GetComponent<Rigidbody2D>();
+        if (!groundCheck)
+        {
+            GameObject obj = new GameObject();
+            obj.transform.SetParent(transform);
+            obj.transform.localPosition = Vector3.zero;
+        }
     }
 
     // Update is called once per frame
