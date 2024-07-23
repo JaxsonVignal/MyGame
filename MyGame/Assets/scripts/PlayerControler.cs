@@ -100,11 +100,13 @@ public class script : MonoBehaviour
             sr.flipX = (hInput < 0); 
         }
 
-
+        //tells the animation editor to flip the animations 
         anim.SetFloat("hInput", Mathf.Abs(hInput));
         anim.SetBool("isGrounded", isGrounded);
     }
 
+
+    //function to check of  the player is on the ground
     bool IsGrounded()
     {
         return Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, isGroundLayer);
