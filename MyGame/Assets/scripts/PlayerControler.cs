@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
@@ -7,6 +8,8 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D), typeof(SpriteRenderer),typeof(Animator))]
 public class script : MonoBehaviour
 {
+
+    
     //variables
 
     //ground movement
@@ -32,11 +35,14 @@ public class script : MonoBehaviour
 
     Animator anim;
 
+ 
     private bool isGrounded = false;
 
     // Start is called before the first frame update
     void Start()
     {
+
+        
 
         //create ridged body and renderer and connect it to mario obj ridged body set in unity 
         rb = GetComponent<Rigidbody2D>();
@@ -71,6 +77,9 @@ public class script : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        AnimatorClipInfo[] curPlayingClips = anim.GetCurrentAnimatorClipInfo(0);
+
         //checks if the player is hitting the ground
         if (!isGrounded)
         {
@@ -87,6 +96,8 @@ public class script : MonoBehaviour
 
         //horizontal input handler
         float hInput = Input.GetAxis("Horizontal");
+
+
         rb.velocity = new Vector2(hInput * speed, rb.velocity.y);
 
         //jump input handler
@@ -101,12 +112,15 @@ public class script : MonoBehaviour
             sr.flipX = (hInput < 0); 
         }
 
+        
+
         //tells the animation editor to flip the animations 
         anim.SetFloat("hInput", Mathf.Abs(hInput));
         anim.SetBool("isGrounded", isGrounded);
 
         if (isGrounded && Input.GetButtonDown("Fire1"))
         {
+
             anim.SetTrigger("isAttacking");
             
         }
@@ -123,6 +137,17 @@ public class script : MonoBehaviour
 
 
     }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("collect"))
+        {
+            Destroy(other.gameObject);
+        }
+    }
+    
+        
+    
 
 
     //function to check of  the player is on the ground
